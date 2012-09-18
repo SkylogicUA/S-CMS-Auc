@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <title><?php echo $vars['meta']['title'];?></title>
+		<meta name="keywords" content="<?php echo $vars['meta']['keywords']; ?>" />
+		<meta name="description" content="<?php echo $vars['meta']['description']; ?>" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="copyright" content="" />
+		<meta name="Author-Corporate" content="" />
+		<meta name="Publisher-Email" content="" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <?php echo $vars['styles']; ?>
+        <!--[if lte IE 7]>
+            <?php echo $this->LoadResource('styles', 'style_ie.css'); ?>
+        <![endif]-->
+        <?php echo $vars['scripts']; //?>
+        <?php
+			if(isset($vars['google']))
+			echo"<script type=\"text/javascript\">
+				  var _gaq = _gaq || [];
+				  _gaq.push(['_setAccount', '".$vars['google']."']);
+				  _gaq.push(['_trackPageview']);
+				
+				  (function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+				</script>";
+		?>
+	</head>
+<body>
+<div id="top_light">
+<div id="foot">
+<div id="container">
+	<div id="head">
+		<?php echo $vars['menu'];?>
+	</div>
+	<div class="clear"></div>
+	<div id="content">
+		<div id="left_col">
+			<?php echo $vars['left_menu'];?>
+			<?php echo $vars['news'];?>
+		</div>
+		<div id="right_col">
+		<? if(isset($vars['breadcrumbs']))echo $vars['breadcrumbs'];?>
+		<?php echo $vars['content'];?>
+		<?php if(isset($vars['meta']['text']))echo'<div class="bot_text">'.htmlspecialchars_decode($vars['meta']['text']).'</div>';?>
+	</div>
+		<div class="clear"></div>
+	</div>	
+    <div id="footer">
+		<? //echo $vars['feedback'];?>
+		<div style="color:#323232; font-size:12px; font-style:italic;">
+			<div style="width:300px; float:left;"><?=$vars['translate']['copyright']?></div>
+			<div style="width:660px; float:left; text-align:right;"><a href="http://skylogic.com.ua" target="_blank" style="color:#323232; font-size:12px; font-style:italic;"><?=$vars['translate']['skylogic']?></a></div>
+			<div class="clear"></div>
+		</div>
+    </div>
+	<div class="clear"></div>
+</div>
+</div>
+</div>
+</body>
+</html>

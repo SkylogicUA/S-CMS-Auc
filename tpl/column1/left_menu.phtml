@@ -1,0 +1,58 @@
+<div id="left_menu">
+	<ul>
+		<?
+			if(!isset($vars['open_link']['level_1']))$vars['open_link']['level_1']=9;
+            foreach($vars['menu'] as $row)
+            {
+				if($row['sub']==0)
+				{
+					$pos = strpos($row['url'], "http://");
+					if($pos !== false)$link=$row['url'].'" target="_blank" rel="nofollow';
+					else $link=LINK."/catalog/".$row['url'];
+					echo'<li><a href="'.$link.'">'.$row['name'].'</a>';
+					
+					if(isset($vars['open_link']['level_1'])&&$row['id']==$vars['open_link']['level_1'])
+					{
+						$sub='';
+						foreach($vars['menu'] as $row2)
+						{
+							if($row2['sub']==$row['id'])
+							{
+								$pos = strpos($row2['url'], "http://");
+								if($pos !== false)$link=$row2['url'].'" target="_blank" rel="nofollow';
+								else $link=LINK."/catalog/".$row2['url'];
+								
+								if(isset($vars['cur_product'])&&$vars['cur_product']==$row2['id'])$class='class="cur_product"';
+								else $class='';
+								$sub.='<li '.$class.'><a href="'.$link.'">'.$row2['name'].'</a>';
+								
+								if(isset($vars['open_link']['level_2'])&&$row2['id']==$vars['open_link']['level_2'])
+								{
+									$sub2='';
+									foreach($vars['menu'] as $row3)
+									{
+										if($row3['sub']==$row2['id'])
+										{
+											$pos = strpos($row3['url'], "http://");
+											if($pos !== false)$link=$row3['url'].'" target="_blank" rel="nofollow';
+											else $link=LINK."/catalog/".$row3['url'];
+											
+											if(isset($vars['cur_product'])&&$vars['cur_product']==$row3['id'])$class='class="cur_product"';
+											else $class='';
+											$sub2.='<li '.$class.'><a href="'.$link.'">'.$row3['name'].'</a></li>';
+										}
+										
+									}
+									if($sub2!='')$sub.='<ul>'.$sub2.'</ul>';	
+								}
+								$sub.='</li>';
+							}
+						}
+						if($sub!='')echo'<ul>'.$sub.'</ul>';
+					}
+					echo'</li>';
+				}
+            }
+        ?>
+	</ul>
+</div>

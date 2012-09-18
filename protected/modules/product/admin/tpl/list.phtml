@@ -1,0 +1,126 @@
+<div class="cm-notification-container"></div>
+<div id="message"><?=$vars['message']?></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<div class="tools-container"><span class="action-add"> <a href="/admin/<?=$vars['action']?>/add">Добавить</a> </span> </div>
+		<h1 class="mainbox-title float-left"><?=$vars['name']?></h1>
+	</div>
+	</div>
+	<div class="mainbox-body">
+		<div id="ds_15014" class="clear">
+        <div class="section-border">
+        <form class="cm-disable-empty " method="POST" name="search_form" action="">
+        <table cellspacing="0" border="0" class="search-header">
+            <tr>
+                <td class="nowrap search-field">
+                    <label>Найти: <?=$_SESSION['search']['word']?></label>
+                    <div class="break">
+                        <input type="text" class="search-input-text" value="<?=$_SESSION['search']['word']?>" size="20" name="word" />
+                        <input type="image" title="Поиск" alt="Поиск" class="search-go" src="/tpl/admin/images/search_go.gif">&nbsp;
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Цена:</label>
+                    <div class="break">
+                        <input type="text" class="input-text-price" onfocus="this.select();" value="<?=$_SESSION['search']['price_from']?>" size="1" name="price_from">&nbsp;&ndash;&nbsp;
+                        <input type="text" class="input-text-price" onfocus="this.select();" value="<?=$_SESSION['search']['price_to']?>" name="price_to" size="1">
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Поиск в категории:</label>
+                    <div class="break clear correct-picker-but">
+                        <select name="cat_id" style="width:200px">
+                            <option value="0">- Все категории -</option>
+                            <?php
+                                foreach($vars['catalog'] as $row)
+                                {
+                                    if($row['sub']==0)
+									{
+										echo"<option value='{$row['id']}'";if($row['id']==$_SESSION['search']['cat_id'])echo" selected";echo">{$row['name']}</option>";
+										foreach($vars['catalog'] as $row2)
+										{
+											if($row['id']==$row2['sub'])
+											{
+												echo"<option value='{$row2['id']}'";if($row2['id']==$_SESSION['search']['cat_id'])echo" selected";echo">&nbsp;&nbsp;&nbsp;{$row2['name']}</option>";
+												foreach($vars['catalog'] as $row3)
+												{
+													if($row2['id']==$row3['sub'])
+													{
+														echo"<option value='{$row3['id']}'";if($row3['id']==$_SESSION['search']['cat_id'])echo" selected";echo">&nbsp;&nbsp;&nbsp; - {$row3['name']}</option>";
+													}
+												}
+											}
+										}
+									}
+                                }
+								
+								foreach($vars['status'] as $row)
+                                {
+									echo"<option value='status-{$row['id']}'";if('status-'.$row['id']==$_SESSION['search']['cat_id'])echo" selected='selected'";echo">{$row['name']}</option>";
+								}
+                            ?>
+                        </select>
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Сортировать:</label>
+                     <div class="break clear correct-picker-but">
+                        <select name="sort" style="width:120px">
+						
+                            <option value="nul" <?=$_SESSION['search']['sort']=='nul'?'selected="selected"':'';?> >- по умолчанию</option>
+							<option value="price asc" <?=$_SESSION['search']['sort']=='price asc'?'selected="selected"':'';?> >- по цене, сначала дешевые</option>
+                            <option value="price desc" <?=$_SESSION['search']['sort']=='price desc'?'selected="selected"':'';?> >- по цене, сначала дорогие</option>
+							<option value="name asc" <?=$_SESSION['search']['sort']=='name asc'?'selected="selected"':'';?> >- по наименованию: А-Я</option>
+                            <option value="name desc" <?=$_SESSION['search']['sort']=='name desc'?'selected="selected"':'';?> >- по наименованию: Я-А</option>
+							<option value="catalog" <?=$_SESSION['search']['sort']=='catalog'?'selected="selected"':'';?> >- по каталогу</option>
+                        </select>
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Выводить по:</label>
+                     <div class="break clear correct-picker-but">
+                        <select name="onpage" style="width:60px">
+                            <option value="10" <?=$_SESSION['search']['onpage']==10?'selected="selected"':'';?> >10</option>
+                            <option value="20" <?=$_SESSION['search']['onpage']==20?'selected="selected"':'';?> >20</option>
+                            <option value="50" <?=$_SESSION['search']['onpage']==50?'selected="selected"':'';?> >50</option>
+                            <option value="100" <?=$_SESSION['search']['onpage']==100?'selected="selected"':'';?> >100</option>
+                        </select>
+                    </div>
+                </td>
+                <td class="buttons-container">
+					 <span class="submit-button "><input type="submit" value="Поиск" name="dispatch[products.manage]"></span>
+                    <span class="submit-button "><input type="submit" value="Очистить" name="clear"></span>
+					
+                </td>
+            </tr>
+			 
+            </table>
+        </form>
+		
+        </div>
+		</div>
+		<div id="content_manage_users">
+			<form name="userlist_form" method="post" action="/admin/<?=$vars['action'].$vars['URL'];?>/update/">
+				<div id="pagination_contents">
+					<?php echo $vars['list'];?>
+				</div> 
+				
+				<div class="buttons-container cm-toggle-button buttons-bg">
+					<div class="cm-buttons-floating hidden" style="display: block;">
+						<div class="cm-buttons-placeholder">
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Сохранить" name="update" class="">
+							</span>или
+							<span class="submit-button cm-button-main cm-confirm cm-process-items">
+								<input type="submit" value="Удалить выбранные" name="delete" class="cm-process-items">
+							</span>
+						</div>
+					</div>
+					<div class="cm-buttons-floating hidden"></div>
+				</div>
+				<input type="hidden" value="<?=$vars['action']?>" id="action" />
+			</form>
+			</div>
+		</div>
+	</div>
+</div>

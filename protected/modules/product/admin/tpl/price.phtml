@@ -1,0 +1,24 @@
+<a href="#" id="addprice">Добавить цену</a>
+    <table width="550" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort" id="price_tb" style="margin-top: 0;">
+        <tr class="noDrop">
+            <th>Цена</th>
+            <th>Порция</th>
+            <th>&nbsp;</th>
+        </tr>
+        <?php
+        foreach($vars['price'] as $row)
+        {
+            echo'<tr id="sort'.$row['id'].'">
+					
+					<td><input type="text" value="'.$row['price'].'" name="price_price[]" class="input-text" style="width:100px;"></td>
+					<td><input type="text" value="'.$row['weight'].'" name="price_name[]" class="input-text" style="width:100px;"></td>
+					<td width="10%">
+						<input type="hidden" value="'.$row['id'].'" name="save_price_id[]" />
+						<ul class="cm-tools-list tools-list">
+							<li><a href="/admin/'.$vars['action'].'/edit/'.$row['product_id'].'/delprice/'.$row['id'].'" class="cm-confirm">Удалить</a></li>
+						</ul>
+					</td>
+				</tr>';
+        }
+        ?>
+    </table>

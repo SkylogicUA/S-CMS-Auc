@@ -1,0 +1,34 @@
+<?
+	echo $vars['slider'];
+	$i=0;
+	foreach($vars['catalog'] as $row)
+	{
+		if($i==2)
+		{
+			$i=-1;
+			$style=' style="margin-right:0;"';
+		}
+		else $style='';
+		echo'<div class="cat" '.$style.'>
+				<a href="'.LINK.'/catalog/'.$row['url'].'">
+					<img src="/tpl/column1/images/cat_bg.png" class="cat_border">
+					<img src="/files/catalog/'.$row['id'].'_s.jpg">
+					<div class="name">'.$row['name'].'</div>
+				</a>
+			 </div>';
+		$i++;
+	}
+	echo '<div class="clear"></div><div style="margin:25px 0 35px 0;">'.htmlspecialchars_decode($vars['top_ban']['body']).'</div>';
+	if(count($vars['product_h'])!=0)
+	{
+		echo'<div class="title">'.$vars['translate']['hot_offers'].'</div>';
+		$i=0;
+		foreach($vars['product_h'] as $row)
+		{
+			include "product.phtml";
+			$i++;
+		}
+		echo'<div class="clear"></div>';
+	}
+
+?>

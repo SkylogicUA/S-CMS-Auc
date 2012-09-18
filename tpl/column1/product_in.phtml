@@ -1,0 +1,63 @@
+<div class="product_in" id="MessForPrint">
+	<?
+		$price=viewPrice($vars['product']['price'], $vars['product']['discount']);
+		$dir=createDir($vars['product']['id']);
+		
+        echo"<div id='img_load'>
+				<div class='photo_product'>
+					<a href='/{$dir[0]}{$vars['product']['id']}.jpg' rel='lightbox' title='{$vars['product']['name']}'>
+					<img src='/{$dir[0]}{$vars['product']['id']}.jpg' width='405' />
+					</a>
+				</div>
+			</div>";
+		echo'<div id="product_right">';
+		
+		echo"<h1 id='product_name'>{$vars['product']['name']}</h1>";
+		
+		
+
+		if($vars['product']['cnt']<1)echo'<div style="text-align:left;" class="price">'.$price['price'].'</div>
+			 <button class="buy" name="'.$vars['product']['id'].'" type="button">'.$vars['translate']['buy'].'</button>';
+			 
+		else echo'<div style="text-align:left;" class="price">'.$price['price'].'</div>
+			 <button class="buy buy2" name="'.$vars['product']['id'].'" type="button">Купить</button>';
+			 	 
+		echo'</div>';	 
+		 
+		echo'<div class="clear"></div>';
+		
+		if(isset($vars['photo']))
+		{
+			$i=0;
+			echo'<div id="more_photo">';
+			foreach($vars['photo'] as $row)
+			{
+				$style='';
+				if($i==3)
+				{
+					$style=' style="margin-right:0;"';
+					$i=-1;	
+				}
+				echo'<div '.$style.'><a href="/'.$dir[0].'more/'.$row['id'].'.jpg" rel="lightbox" title="'.$row['name'].'"><img src="/tpl/column1/images/photo_bg.png" class="border" /></a>
+					 <img src="/'.$dir[0].'more/'.$row['id'].'_s.jpg" /></div>';
+					 $i++;
+			}
+			echo'<br class="clear" /></div>';
+		}
+		echo"<div style='margin:10px 0 50px 0; color:#454646;'>".htmlspecialchars_decode($vars['product']['body'])."</div>";
+		
+		if(isset($vars['other']))
+		{
+			echo'<div id="other">'.$vars['translate']['other_product'].'</div>';
+			$i=0;
+			foreach($vars['other'] as $row)
+			{
+				include "product.phtml";
+				$i++;
+			}
+			echo'<div class="clear"></div>';
+		}
+
+       // if($vars['product']['body_m']!='')echo"<div class='desc'><h4>".$vars['translate']['param']."</h4>".htmlspecialchars_decode($vars['product']['body_m'])."</div><br class='clear' />";
+    ?>
+</div>
